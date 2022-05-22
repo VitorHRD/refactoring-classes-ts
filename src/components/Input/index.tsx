@@ -9,7 +9,13 @@ import { useField } from '@unform/core';
 
 import { Container } from './styles';
 
-const Input = ({ name, icon: Icon, ...rest }) => {
+interface inputProps {
+  name : string ;
+  icon?: keyof JSX.IntrinsicElements;
+  placeholder?: string ;
+}
+
+const Input = ({ name, icon: Icon, ...rest }:inputProps) => {
   const inputRef = useRef(null);
 
   const [isFocused, setIsFocused] = useState(false);
@@ -24,7 +30,7 @@ const Input = ({ name, icon: Icon, ...rest }) => {
   const handleInputBlur = useCallback(() => {
     setIsFocused(false);
 
-    setIsFilled(!!inputRef.current?.value);
+    setIsFilled(!!inputRef.current);
   }, []);
 
   useEffect(() => {
