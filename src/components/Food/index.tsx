@@ -4,15 +4,30 @@ import { FiEdit3, FiTrash } from 'react-icons/fi';
 import { Container } from './styles';
 import api from '../../services/api';
 
-class Food extends Component {
-  constructor(props) {
-    super(props);
+interface FoodsInteface {
+  id: Number;
+  name: String;
+  description: String;
+  price: String;
+  available: boolean;
+  image: String;
 
-    const { available } = this.props.food;
-    this.state = {
-      isAvailable: available
-    };
-  }
+}
+interface FoodProps {
+  key: Number;
+  food: FoodsInteface;
+  handleDelete:(id:Number) => void;
+  handleEditFood :(food:FoodsInteface) => Promise<void>
+}
+export default Food (props){
+  // constructor(props) {
+  //   super(props);
+
+  //   const { available } = this.props.food;
+  //   this.state = {
+  //     isAvailable: available
+  //   };
+  // }
 
   toggleAvailable = async () => {
     const { food } = this.props;
@@ -88,5 +103,3 @@ class Food extends Component {
     );
   }
 };
-
-export default Food;
