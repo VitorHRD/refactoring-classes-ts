@@ -6,14 +6,15 @@ import Food from '../../components/Food';
 import ModalAddFood from '../../components/ModalAddFood';
 import ModalEditFood from '../../components/ModalEditFood';
 import { FoodsContainer } from './styles';
+import { useEffect } from 'react';
 
 interface FoodsInteface {
-    id: Number; 
-    name: String;
-    description: String;
-    price: String;
+    id: number; 
+    name: string;
+    description: string;
+    price: string;
     available: boolean;
-    image: String;
+    image: string;
 
 }
 export function Dashboard () {
@@ -27,7 +28,7 @@ export function Dashboard () {
     //   modalOpen: false,
     //   editModalOpen: false,
     // }
-
+   useEffect(()=>{componentDidMount()},[])
   async function componentDidMount() {
     const response = await api.get('/foods')
     setFoods(response.data);
@@ -72,8 +73,7 @@ export function Dashboard () {
 
     setFoods(foodsFiltered);
   }
-
- async function toggleModal () {
+ function toggleModal () {
     setModalOpen(!modalOpen);
   }
 

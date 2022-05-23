@@ -1,66 +1,60 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { FiEdit3, FiTrash } from 'react-icons/fi';
 
 import { Container } from './styles';
 import api from '../../services/api';
 
 interface FoodsInteface {
-  id: Number;
-  name: String;
-  description: String;
-  price: String;
+  id: number;
+  name: string;
+  description: string;
+  price: string;
   available: boolean;
-  image: String;
+  image: string;
 
 }
 interface FoodProps {
   key: Number;
   food: FoodsInteface;
   handleDelete:(id:Number) => void;
-  handleEditFood :(food:FoodsInteface) => Promise<void>
+  handleEditFood :(food:FoodsInteface) => void
 }
-export default Food (props){
+export default function Food (props: FoodProps){
+  const { available } = props.food;
+  const [isAvailable , setIsAvailable] = useState(available)
   // constructor(props) {
   //   super(props);
+         
 
-  //   const { available } = this.props.food;
   //   this.state = {
   //     isAvailable: available
   //   };
   // }
 
-  toggleAvailable = async () => {
-    const { food } = this.props;
-    const { isAvailable } = this.state;
+  async function toggleAvailable () {
 
-    await api.put(`/foods/${food.id}`, {
-      ...food,
+    await api.put(`/foods/${props.food.id}`, {
+      ...props.food,
       available: !isAvailable,
     });
 
-    this.setState({ isAvailable: !isAvailable });
+    setIsAvailable(!isAvailable);
   }
 
-  setEditingFood = () => {
-    const { food, handleEditFood } = this.props;
-
-    handleEditFood(food);
+  function setEditingFood (){
+    props.handleEditFood(props.food);
   }
-
-  render() {
-    const { isAvailable } = this.state;
-    const { food, handleDelete } = this.props;
 
     return (
       <Container available={isAvailable}>
         <header>
-          <img src={food.image} alt={food.name} />
+          <img src={props.food.image} alt={props.food.name} />
         </header>
         <section className="body">
-          <h2>{food.name}</h2>
-          <p>{food.description}</p>
+          <h2>{props.food.name}</h2>
+          <p>{props.food.description}</p>
           <p className="price">
-            R$ <b>{food.price}</b>
+            R$ <b>{props.food.price}</b>
           </p>
         </section>
         <section className="footer">
@@ -68,8 +62,8 @@ export default Food (props){
             <button
               type="button"
               className="icon"
-              onClick={this.setEditingFood}
-              data-testid={`edit-food-${food.id}`}
+              onClick={setEditingFood}
+              data-testid={`edit-food-${props.food.id}`}
             >
               <FiEdit3 size={20} />
             </button>
@@ -77,8 +71,8 @@ export default Food (props){
             <button
               type="button"
               className="icon"
-              onClick={() => handleDelete(food.id)}
-              data-testid={`remove-food-${food.id}`}
+              onClick={() =>props.handleDelete(props.food.id)}
+              data-testid={`remove-food-${props.food.id}`}
             >
               <FiTrash size={20} />
             </button>
@@ -87,13 +81,13 @@ export default Food (props){
           <div className="availability-container">
             <p>{isAvailable ? 'Disponível' : 'Indisponível'}</p>
 
-            <label htmlFor={`available-switch-${food.id}`} className="switch">
+            <label htmlFor={`available-switch-${props.food.id}`} className="switch">
               <input
-                id={`available-switch-${food.id}`}
+                id={`available-switch-${props.food.id}`}
                 type="checkbox"
                 checked={isAvailable}
-                onChange={this.toggleAvailable}
-                data-testid={`change-status-food-${food.id}`}
+                onChange={toggleAvailable}
+                data-testid={`change-status-food-${props.food.id}`}
               />
               <span className="slider" />
             </label>
@@ -101,5 +95,4 @@ export default Food (props){
         </section>
       </Container>
     );
-  }
-};
+  };

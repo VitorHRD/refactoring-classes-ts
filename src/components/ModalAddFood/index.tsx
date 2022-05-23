@@ -6,12 +6,12 @@ import Modal from '../Modal';
 import Input from '../Input';
 
 interface FoodsInteface {
-  id: Number;
-  name: String;
-  description: String;
-  price: String;
+  id: number;
+  name: string;
+  description: string;
+  price: string;
   available: boolean;
-  image: String;
+  image: string;
 
 }
 interface ModalAddFoodProps {
@@ -22,8 +22,7 @@ interface ModalAddFoodProps {
 
 export default function ModalAddFood(props: ModalAddFoodProps) {
   const formRef = useRef(null);
-
-  async function handleSubmit(data: FoodsInteface) {
+  async function handleSubmit(data : any ) {
 
     props.handleAddFood(data);
     props.setIsOpen();
