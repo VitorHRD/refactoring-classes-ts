@@ -22,8 +22,7 @@ interface ModalAddFoodProps {
 
 export default function ModalAddFood(props: ModalAddFoodProps) {
   const formRef = useRef(null);
-  async function handleSubmit(data : any ) {
-
+  async function handleSubmit(data : FoodsInteface ) {
     props.handleAddFood(data);
     props.setIsOpen();
   };
